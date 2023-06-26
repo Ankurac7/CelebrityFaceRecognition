@@ -1,5 +1,10 @@
 def classify_image(image_base64_data, file_path=None):
     pass
+def get_cv2_image_from_base64_string(b64str):
+    encoded_data = b64str.split(',')[0]
+    nparr = np.frombuffer(base64.b64decode(encoded_data), np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    return img, encoded_data
 
 def get_cropped_image_if_2_eyes(image_path, image_base64_data):
     face_cascade = cv2.CascadeClassifier('./opencv/haarcascades/haarcascade_frontalface_default.xml')
