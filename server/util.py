@@ -10,7 +10,9 @@ def classify_image(image_base64_data, file_path=None):
         
         len_image_array = 32*32*3 + 32*32
 
-        final = combined_img.reshape(1,len_image_array)
+        final = combined_img.reshape(1,len_image_array).astype(float)
+        return final
+
 def get_cv2_image_from_base64_string(b64str):
     '''
     credit: https://stackoverflow.com/questions/33754935/read-a-base-64-encoded-image-from-memory-using-opencv-python-library
