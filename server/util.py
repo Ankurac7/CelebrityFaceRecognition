@@ -1,8 +1,14 @@
+import joblib
+import json
+import numpy as np
+import base64
+import cv2
+from wavelet import w2d
+
 __class_name_to_number = {}
 __class_number_to_name = {}
 
 __model = None
-
 def classify_image(image_base64_data, file_path=None):
     imgs = get_cropped_image_if_2_eyes(file_path, image_base64_data)
 
@@ -16,6 +22,8 @@ def classify_image(image_base64_data, file_path=None):
         len_image_array = 32*32*3 + 32*32
 
         final = combined_img.reshape(1,len_image_array).astype(float)
+
+        __model.predict(final)[0]
 
 def load_saved_artifacts():
     print("loading saved artifacts...start")
