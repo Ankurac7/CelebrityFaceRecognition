@@ -12,7 +12,7 @@ __model = None
 def classify_image(image_base64_data, file_path=None):
     imgs = get_cropped_image_if_2_eyes(file_path, image_base64_data)
 
-    
+    result = []
     for img in imgs:
         scalled_raw_img = cv2.resize(img, (32, 32))
         img_har = w2d(img, 'db1', 5)
@@ -23,7 +23,9 @@ def classify_image(image_base64_data, file_path=None):
 
         final = combined_img.reshape(1,len_image_array).astype(float)
 
-        __model.predict(final)[0]
+        result.append(__model.predict(final)[0])
+
+    return result
 
 def load_saved_artifacts():
     print("loading saved artifacts...start")
@@ -76,4 +78,6 @@ def get_b64_test_image_for_virat():
 
 
 if __name__ == '__main__':
+    load_saved_artifacts()
+    
     print(classify_image(get_b64_test_image_for_virat(), None))
