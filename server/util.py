@@ -23,7 +23,7 @@ def classify_image(image_base64_data, file_path=None):
 
         final = combined_img.reshape(1,len_image_array).astype(float)
 
-        result.append(__model.predict(final)[0])
+        result.append(class_number_to_name(__model.predict(final)[0]))
 
     return result
 
@@ -41,6 +41,9 @@ def load_saved_artifacts():
         with open('./artifacts/saved_model.pkl', 'rb') as f:
             __model = joblib.load(f)
     print("loading saved artifacts...done")
+
+def class_number_to_name(class_num):
+    return __class_number_to_name[class_num]
 
 def get_cv2_image_from_base64_string(b64str):
     '''
@@ -81,3 +84,4 @@ if __name__ == '__main__':
     load_saved_artifacts()
     
     print(classify_image(get_b64_test_image_for_virat(), None))
+    
